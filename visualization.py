@@ -9,6 +9,13 @@ import numpy as np
 # another option might be better.--------------#
 #----------------------------------------------#
 
+# Column 11 is for embark where C = Cherbourg; Q = Queenstown; S = Southampton
+# Parch = number of parents/children aboard
+# Sibsp = number of siblings/spouses aboard
+# Pclass is aprox. for socio-economic status 1st upper, 2nd middle, 3rd lower
+# Ages ending on xx.5 is approximated.
+
+
 # These are the columns of the csv file.
 # PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
 csv_file = csv.reader(open('dataset/train.csv', 'rb'))
