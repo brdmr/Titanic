@@ -40,29 +40,42 @@ for row in data :
   # Get number of Males and Females respectively from the passenger list
   if row[4] == 'male':
     numMales = numMales + 1
+    if row[1] == "0":
+      numMenDead = numMenDead + 1
+    if row[1] == "1":
+      numMenSurvive = numMenSurvive + 1
+
   if row[4] == 'female':
     numFemales = numFemales + 1
-
-  # Get number of survivers / non-survivers
-  if row[1] == "0":
-    numDead = numDead + 1
-  if row[1] == "1":  # Could have been an else-statement. isn't due to clarity ATM.
-    numSurvive = numSurvive + 1
+    if row[1] == "0":
+      numWomenDead = numWomenDead + 1
+    if row[1] == "1":
+      numWomenSurvive = numWomenSurvive + 1
 
   # Get all ages represented among the passengers
   if row[5] != '':
     if float(row[5]) not in age:
       age.append(float(row[5]))
 
+numSurvive = numWomenSurvive + numMenSurvive
+numDead = numWomenDead + numMenDead
+
 
 # Print the extracted data
 
-print header
-print "Survivors: ", numSurvive
-print "Casulties: ", numDead
+# print header <<-- Good to see what the columns are named
+print "Number of entries: ", len(data)
+print "------------------------------------"
+print "Women Survivors: ", numWomenSurvive
+print "Men Survivors: ", numMenSurvive
+print "Total Survivors: ", numSurvive
+print "------------------------------------"
+print "Women Casulties: ", numWomenDead
+print "Men Casulties: ", numMenDead
+print "Total Casulties: ", numDead
+print "------------------------------------"
 print "Ages:", age
 print "Number of different ages: ", len(age)
-print "Number of entries: ", len(data)
 print "Number of females: ", numFemales
 print "Number of males: ", numMales
 print "Is all passengers considered Male of Female? : ", (numFemales + numMales) == len(data)
