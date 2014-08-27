@@ -87,3 +87,8 @@ print "Number of females: ", numFemales
 print "Number of males: ", numMales
 print "Is all passengers considered Male of Female? : ", (numFemales + numMales) == len(data)
 #print data[13::,9] # This prints column 9 from each row, starting at row 13.
+
+################### TODO!
+################### VISUALIZATION WITHOUT CHECKING THE MISSING VALUES
+################### 4 REAL BRO, DO NOT F**K WITH ME
+################### TODO!
