@@ -2,6 +2,9 @@ import csv as csv
 import numpy as np
 import random as rand
 
+# These are the columns of the csv file.
+# PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+
 # Simple randomforest
 # Based of a descision tree
 # Then split the dataset into a number of sets to make the decision tree
@@ -44,10 +47,42 @@ csv_file = csv.reader(open("dataset/train.csv", 'rb'))
 # Save the header, but should not be part of the dataset
 header = csv_file.next()
 
+########################First try decision tree#################################
+# Lets make the decision tree answer 4 questions to determine survival or not
+# 1. Male or Female?
+# 2. Younger than 18?
+# 3. Any relatives aboard? That is Parch + Sibsp > 0 ?
+# 4. Upper class?
+
+# then from my understanding this would result in a simple decision tree:
+def simple_static_decision_tree(dataset):
+  # The static part of the decision tree is that we
+  # hard code the passenger we want to check.
+  # Passenger:
+  # Male, Older than or equal to 18 (Adult), No relatives aboard, Upper
+
+  # The weird part is that since we know what we want to check we can do it in a
+  # single for-loop to see if a passenger is suitable to help classification.
+  # Anyway, lets keep on going.
+  new_dataset = []
+  for row in dataset:
+      # row[5] != '' is not nice, even remotely. Do NOT make it permanent
+      # TODO!
+      if row[4] == 'male' and row[5] != '' and float(row[5]) >= 18 and float(row[2]) == 1 and (int(row[6]) + int(row[7])) == 0:
+        new_dataset.append(row)
+  # This extraction gives 54 passengers out of 891 ,that is 6%
+  # There was 4 questions, we should get approximately 6.25%
+  # Now, it isn't a great number, but daum that was beautifully close to
+  # what we we approximated. <3 ALL
+  return new_dataset
 
 
 ##############################Functions#########################################
 
+# Clean the dataset from wrong information
+
+
+# For now we skip this part, we need a simple decision tree.
 # Splits the dataset into splitSize number of splits
 def split_dataset(dataset, datasetSize, splitSize):
   array = np.empty([splitSize, datasetSize])
@@ -62,6 +97,16 @@ def split_dataset(dataset, datasetSize, splitSize):
   # this gives randomized splits and all splits have the same size (+-1)
   #
 #count number of rows in dataset needed for the split
-datasetSize = sum(1 for row in csv_file)
-splitSize = 2
-split_dataset(csv_file, 4, splitSize)
+#datasetSize = sum(1 for row in csv_file)
+#splitSize = 2
+#split_dataset(csv_file, 4, splitSize)
+
+ds = simple_static_decision_tree(csv_file)
+#print ds
+surv = sum(1 for x in ds if x[1] == '1')
+died = sum(1 for x in ds if x[1] == '0')
+print "Persons matching our description:", sum(1 for x in ds)
+print "Survived: ", surv, "persons"
+print "Died: ", died, "persons"
+print "Survival probability:", round(100*(float(surv)/(surv+died))),"%"
+print "Death probability:", round(100*(float(died)/(surv+died))),"%"
